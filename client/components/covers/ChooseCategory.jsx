@@ -8,7 +8,7 @@ module.exports = React.createClass({
 		return (
 			<div className="form-group">
         <select className="form-control btn-border" onChange={this.handleChange} >
-        	<option value="">Select a Category...</option>
+        	<option value="">Select a New Category...</option>
         	<optgroup label='Mysteries, Thrillers, Action'>
         		<option value='157055011'>Action and Adventure</option>
         		<option value='6190476011'>Cozy Mysteries</option>
