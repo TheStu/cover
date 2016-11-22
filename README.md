@@ -1,24 +1,5 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Playing around with Rails in API mode / React.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The idea is to use Amazon's embedded 'preview kindle ebook' feature to let readers decide if they like a book by reading the sample of the book. Readers can then see the book on Amazon, get another book similar to the one they're reading or get something different. Books are fetched via the Amazon Product API.
