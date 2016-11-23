@@ -1,49 +1,71 @@
+// New books only by different author
+// add each asin to seen books
+// grab a book from starter_books (needs better name) if Unrelated called. look for category == category
+
 var React = require('react');
 var Reqwest = require('reqwest');
 var Cover = require('../covers/Cover.jsx');
 var MoreButton = require('../covers/MoreButton.jsx');
 var LessButton = require('../covers/LessButton.jsx');
-var ChooseCategory = require('../covers/ChooseCategory.jsx');
+var ChooseGenre = require('../covers/ChooseGenre.jsx');
 
 module.exports = React.createClass({
-	getDefaultProps: function () {
+	getDefaultProps: function() {
 		return { origin: process.env.NODE_ENV == 'development' ? 'http://localhost:3000' : '' };
 	},
-	getInitialState: function () {
+	getInitialState: function() {
 		return { 
 			asin: 'B007J4T2G8', // initial book is Fifty Shades of Grey - Book#1
-			category: '157319011',
-			seen_books: [], // books seen by this user in this session, so they don't see the same book twice
-			starter_books: [] // books from the initial API call on the genre. Store them to limit API calls
+			category: '157057011', // erotica category (amazon node id -- see ChooseGenre.jsx)
+			author: 'E L James', // saved so that books by the same author aren't shown again and again. Variety is better
 		};
 	},
-	fetchUnrelatedBook: function(newCategory) {
+	componentWillMount: function() { // since there's no point rerendering on these variables, define as instance variables rather than state
+		this.seenBooks = ['B007J4T2G8']; // books seen by this user in this session, so they don't see the same book twice
+		this.displayableBooks = []; // books from the initial API call on the genre. Store them to limit API calls
+	},
+	fetchNewCategory: function(newCategory) {
+		this.setState({ category: newCategory })
+		this.displayableBooks = []; // reset displayable books upon switching to a new category, otherwise might return unexpected starter_books
 		var origin = this.props.origin;
-		var cat = newCategory || this.state.category
+		var cat = newCategory;
 		Reqwest({
 			url: origin + '/fetch_new_book/' + cat,
 			type: 'json',
 			method: 'get',
 			contentType: 'application/json',
 		})
-		.then(response => this.changeBook(response))
+		.then(response => this.handleBookData(response))
 		.fail(err => console.log('error!'));
 	},
 	fetchRelatedBook: function() {
 		var origin = this.props.origin;
 		var asin = this.state.asin;
+		var author = this.state.author;
 		Reqwest({
-			url: origin + '/fetch_related_book/' + asin,
+			url: origin + '/fetch_related_book/' + asin + '/' + author,
 			type: 'json',
 			method: 'get',
 			contentType: 'application/json',
 		})
-		.then(response => this.changeBook(response))
+		.then(response => this.handleBookData(response))
 		.fail(err => console.log('error!'));
 	},
-	changeBook: function(data) {
-		this.setState({ asin: data['asin'] });
-		// grab feed of books, set new state with first one that isn't seen yet. add this book to seen books
+	handleBookData: function(data) {
+		this.displayableBooks = this.displayableBooks.concat(data);
+		this.changeBook();
+	},
+	changeBook: function() {
+		var newAsin = '';
+		var newAuthor = '';
+		var newBook = {};
+		do { // loop that finds a book that hasn't been shown yet
+			newBook = this.displayableBooks.pop();
+			newAsin = newBook['asin'];
+			newAuthor = newBook['author'];
+		} while (this.seenBooks.includes(newAsin) && this.displayableBooks.length > 0);
+		this.seenBooks.push(this.state.asin);
+		this.setState({ asin: newAsin, author: newAuthor });
 	},
 	render: function () {
 		return (
@@ -53,17 +75,20 @@ module.exports = React.createClass({
 						<Cover asin={this.state.asin} />
 					</div>
 					<div className="col-lg-3">
-						<p>Click on the cover to start reading!</p>
-						<h4>Show Me...</h4>
-						<MoreButton onChange={this.fetchRelatedBook} />
-						<br/>
-						<LessButton onChange={this.fetchUnrelatedBook} />
-						<br/>
-		      	<a className="btn btn-primary btn-lg btn-border btn-block" href={"http://www.amazon.com/dp/" + this.props.asin + "/?tag=scrowed-20"} target="_blank" rel="nofollow">
-			      	<b><i className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i> See it on Amazon</b>
-		      	</a>
-						<h4>Or Explore a New Category...</h4>
-						<ChooseCategory onChange={this.fetchUnrelatedBook} />
+						<div className="feature-bg">
+							<p>Click on the cover to start reading!</p>
+							<h4>Show Me...</h4>
+							<MoreButton onChange={this.fetchRelatedBook} />
+							<br/>
+							<LessButton onChange={this.changeBook} displayableBookLength={this.displayableBooks.length} />
+			      	<a className="btn btn-primary btn-lg btn-border btn-block" href={"http://www.amazon.com/dp/" + this.state.asin + "/?tag=scrowed-20"} target="_blank" rel="nofollow">
+				      	<b><i className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i> See it on Amazon</b>
+			      	</a>
+		      	</div>
+		      	<div className="feature-bg">
+							<h4>Or Explore a New Category...</h4>
+							<ChooseGenre onChange={this.fetchNewCategory} />
+						</div>
 					</div>
 				</div>
 			</div>
