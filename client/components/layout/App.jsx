@@ -72,22 +72,29 @@ module.exports = React.createClass({
 			<div className="container-fluid">
 				<div className="row">
 					<div className="col-lg-4 col-lg-offset-2 text-right">		
-						<Cover asin={this.state.asin} />
+						<div className="cover">
+							<Cover asin={this.state.asin} />
+						</div>
 					</div>
 					<div className="col-lg-3">
-						<div className="feature-bg">
-							<p>Click on the cover to start reading!</p>
-							<h4>Show Me...</h4>
-							<MoreButton onChange={this.fetchRelatedBook} />
-							<br/>
-							<LessButton onChange={this.changeBook} displayableBookLength={this.displayableBooks.length} />
-			      	<a className="btn btn-primary btn-lg btn-border btn-block" href={"http://www.amazon.com/dp/" + this.state.asin + "/?tag=scrowed-20"} target="_blank" rel="nofollow">
-				      	<b><i className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i> See it on Amazon</b>
-			      	</a>
-		      	</div>
-		      	<div className="feature-bg">
-							<h4>Or Explore a New Category...</h4>
-							<ChooseGenre onChange={this.fetchNewCategory} />
+						<div className="buttons">
+							<div className="feature-bg">
+								<p className="read-text">Try judging a book by how good the first chapter is. Click on the cover to start reading!</p>
+								<img className="arrow" src="arrow.png" />
+							</div>
+							<div className="feature-bg">
+								<h4>Show Me...</h4>
+								<MoreButton onChange={this.fetchRelatedBook} />
+								<br/>
+								<LessButton onChange={this.changeBook} displayableBookLength={this.displayableBooks.length} />
+				      	<a className="btn btn-primary btn-lg btn-border btn-block" href={"http://www.amazon.com/dp/" + this.state.asin + "/?tag=scrowed-20"} target="_blank" rel="nofollow">
+					      	<b><i className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i> See it on Amazon</b>
+				      	</a>
+			      	</div>
+			      	<div className="feature-bg">
+								<h4>Or Explore a New Genre...</h4>
+								<ChooseGenre onChange={this.fetchNewCategory} />
+							</div>
 						</div>
 					</div>
 				</div>

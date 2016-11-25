@@ -1,5 +1,22 @@
 body {
-	/*background-color: #333;*/
+	background-color: #333;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: 'Gloria Hallelujah', cursive;
+}
+
+.cover, .buttons {
+	margin-top: 50px;
+}
+
+.read-text {
+	font-size: 17px;
+	font-family: 'Gloria Hallelujah', cursive;
+}
+
+.arrow {
+	max-width: 100px;	
 }
 
 .btn-border {
@@ -11,7 +28,7 @@ body {
 }
 
 .feature-bg {
-	padding: 20px;
-	background-color: #eee;
+	padding: 15px;
+	background-color: white;
 	margin-bottom: 20px;
 }

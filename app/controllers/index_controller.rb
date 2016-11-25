@@ -1,5 +1,9 @@
 class IndexController < ApplicationController
 
+  def index
+    render file: 'public/index.html'
+  end
+
   def fetch_new_book # fetch a new book from Amazon, based on category (amazon browse node == category id -- see ChooseGenre.jsx)
   	results = Amazon::Ecs.browse_node_lookup(params[:category].to_i, {response_group: 'TopSellers'})
   	books = []
