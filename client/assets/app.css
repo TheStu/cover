@@ -7,16 +7,18 @@ h1, h2, h3, h4, h5 {
 }
 
 .brand {
-	color: red;
-	padding: 20px;
+	color: #116a98;
+	padding: 0 5px 5px;
 	font-size: 30px;
 	font-family: 'Special Elite', cursive;
 }
 
-.b {
-		border: 1px solid red;
-    padding: 6px 4px 0px;
-		margin-right: 2px;
+.cover, .buttons {
+	margin-top: 20px;
+}
+
+.white {
+		color: white;
 }
 
 .read-text {
@@ -37,6 +39,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .feature-bg {
+	max-width: 291px;
 	padding: 15px;
 	background-color: white;
 	margin-bottom: 20px;

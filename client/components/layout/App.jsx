@@ -72,16 +72,17 @@ module.exports = React.createClass({
 			<div className="container-fluid">
 				<div className="row">
 					<div className="col-lg-12">
-						<div className="brand"><span className="b">B</span>ookFind</div>
+						<br/>
+						<span className="brand">BookFind <i className="glyphicon glyphicon-search white" aria-hidden="true"></i></span>
 					</div>
 				</div>
 				<div className="row">
-					<div className="col-lg-4 col-lg-offset-2 text-right">		
+					<div className="col-lg-4 col-lg-offset-2 text-right col-md-6 col-sm-6 col-xs-6">		
 						<div className="cover">
 							<Cover asin={this.state.asin} />
 						</div>
 					</div>
-					<div className="col-lg-3">
+					<div className="col-lg-3 col-md-6 col-sm-6 col-xs-6">
 						<div className="buttons">
 							<div className="feature-bg">
 								<p className="read-text">Try judging a book by how good the first chapter is. Click on the cover to start reading!</p>
