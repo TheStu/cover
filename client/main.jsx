@@ -1,6 +1,4 @@
 require('./assets/app.css');
-require('./assets/menu.css');
-require('./assets/covers.css');
 
 var React = require('react');
 var ReactDOM = require('react-dom');

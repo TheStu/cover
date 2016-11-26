@@ -71,6 +71,11 @@ module.exports = React.createClass({
 		return (
 			<div className="container-fluid">
 				<div className="row">
+					<div className="col-lg-12">
+						<div className="brand"><span className="b">B</span>ookFind</div>
+					</div>
+				</div>
+				<div className="row">
 					<div className="col-lg-4 col-lg-offset-2 text-right">		
 						<div className="cover">
 							<Cover asin={this.state.asin} />
